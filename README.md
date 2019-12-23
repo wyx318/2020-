@@ -269,3 +269,77 @@ class Animal{
 - 手写一个 Promise （极难） 抽空有时间 建议 学会 
 参考 [https://juejin.im/post/5aafe3edf265da238f125c0a](https://juejin.im/post/5aafe3edf265da238f125c0a "null")
 
+#DOM 
+- 事件委托 
+**参考答案** :
+简易版 （有缺陷 没有考虑子元素 ）: bug 在于，如果用户点击的是 li 里面的 span，就没法触发 fn，这显然不对
+```
+  ul.addEventListener('click',function(e){
+  if(e.target.tagName.toLowerCase() === 'li'){
+    fn() // 执行某个函数 
+    //console.log('您点击了li')
+  }
+})
+。
+```
+高级版 ：思路是点击 span 后，递归遍历 span 的祖先元素看其中有没有 ul 里面的 li。
+```
+function delegate(element, eventType, selector, fn) {
+     element.addEventListener(eventType, e => {
+       let el = e.target
+       while (!el.matches(selector)) {
+         if (element === el) {
+           el = null
+           break
+         }
+         el = el.parentNode
+       }
+       el && fn.call(el, e, el)
+     })
+     return element
+   }
+```
+- 用mouse事件 写一个可以拖拽的div
+**参考答案** : 该题考察的比较全面  [http://js.jirengu.com/mowevogufa/8/edit](http://js.jirengu.com/mowevogufa/8/edit)
+
+
+```
+//HTML 部分 
+<div id="xxx"></div>
+// CSS部分 
+div{
+  border: 1px solid red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+}
+*{margin:0; padding: 0;}
+//JS部分 
+var dragging = false 
+var position = null 
+xxx.addEventListener("mousedown",function(e){
+  dragging = true 
+  position = [e.clientX,e.clientY]
+})
+
+document.addEventListener('mousemove',function(e){
+  if(dragging === false){return}
+  console.log('hi')
+  const x = e.clientX
+  const y = e.clientY
+  const deltaX = x-position[0]
+  const deltaY = y-position[1]
+  const left = parseInt(xxx.style.left || 0)
+  const  top = parseInt(xxx.style.top || 0)
+  xxx.style.left = left + deltaX + 'px'
+  xxx.style.top = top+deltaY +'px'
+  position= [x,y]
+})
+document.addEventListener("mouseup",function(e){
+  console.log("停止")
+  dragging = false
+})
+```
+
