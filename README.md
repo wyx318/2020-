@@ -342,4 +342,45 @@ document.addEventListener("mouseup",function(e){
   dragging = false
 })
 ```
+#HTTP
+- HTTP 状态码知道哪些？分别什么意思？ 
+ **参考答案** ：
+— 2xx 表示成功
+— 3xx 表示需要进一步操作 
+— 4xx 表示浏览器（客户端）方面出错 
+— 5xx 表示服务器方面出错 
+— 完整参考  [http://www.runoob.com/http/http-status-codes.html](http://www.runoob.com/http/http-status-codes.html "null")
+- HTTP 缓存有哪几种？ 
+**参考答案**：*   需要详细的了解 ETag、CacheControl、Expires 的异同
+--  参考 [https://imweb.io/topic/5795dcb6fb312541492eda8c](https://imweb.io/topic/5795dcb6fb312541492eda8c "null")
+答题要点 
+1.ETag 是通过对比浏览器和服务器资源的特征值（如MD5）来决定是否要发送文件内容，如果一样就只发送 304（not modified）
+2.Expires 是设置过期时间（绝对时间），但是如果用户的本地时间错乱了，可能会有问题
+3.CacheControl: max-age=3600 是设置过期时长（相对时间），跟本地时间无关。
 
+- GET 和 POST 的区别 （常考）
+**参考答案**：（误解颇多 错解，但是能过面试）
+1.GET在浏览器回退时是无害的，而POST会再次提交请求。
+2.GET产生的URL地址可以被加入收藏栏，而POST不可以。
+3.GET请求会被浏览器主动cache，而POST不会，除非手动设置。
+4.GET请求只能进行url编码，而POST支持多种编码方式。
+5.GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。
+6.GET请求在URL中传送的参数是有长度限制的，而POST么有。
+7.对参数的数据类型，GET只接受ASCII字符，而POST没有限制。
+8.GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。
+9.GET参数通过URL传递，POST放在Request body中
+
+正解：就一个区别：语义——GET 用于获取资源，POST 用于提交资源
+详细请参考 ： [https://zhuanlan.zhihu.com/p/22536382](https://zhuanlan.zhihu.com/p/22536382 "null")
+
+- Cookie V.S. LocalStorage V.S. SessionStorage V.S. Session
+**参考答案**：
+1、Cookie V.S. LocalStorage
+       主要区别是 Cookie 会被发送到服务器，而 LocalStorage 不会
+      Cookie 一般最大 4k，LocalStorage 可以用 5Mb 甚至 10Mb（各浏览器不同）
+2、LocalStorage V.S. SessionStorage
+LocalStorage 一般不会自动过期（除非用户手动清除），而 SessionStorage 在回话结束时过期（如关闭浏览器）
+3、Cookie V.S. Session
+Cookie 存在浏览器的文件里，Session 存在服务器的文件里
+Session 是基于 Cookie 实现的，具体做法就是把 SessionID 存在 Cookie 里
+ 
